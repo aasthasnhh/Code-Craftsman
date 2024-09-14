@@ -1,1 +1,195 @@
+#html code
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Center</title>
+    <link rel="stylesheet" href="gfg.css"> <!-- Link to the external CSS file -->
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Welcome to Our Healthcare Center</h1>
+        <p>Your health, our priority. Book an appointment today!</p>
+    </header>
+
+    <!-- Appointment Form Section -->
+    <section id="appointment">
+        <h2>Book an Appointment</h2>
+        <form id="appointmentForm" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+            </div>
+            <div class="form-group">
+                <label for="date">Appointment Date:</label>
+                <input type="date" id="date" name="date">
+            </div>
+            <div class="form-group">
+                <label for="message">Message (Optional):</label>
+                <textarea id="message" name="message" placeholder="Enter your message"></textarea>
+            </div>
+            <button type="submit" >Submit</button>
+            
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Healthcare Center. All rights reserved.</p>
+    </footer>
+
+    <!-- Link to the external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+
+
+
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Finder</title>
+    <link rel="stylesheet" href="gfg.css">
+</head>
+<body>
+    <h1>Healthcare Problem Finder</h1>
+    <form id="healthcareForm">
+        <label for="problem">Enter Healthcare Problem:</label>
+        <input type="text" id="problem" name="problem" required>
+        <button type="submit">Find Solution and Doctors</button>
+    </form>
+
+    <section id="results">
+        <h2>Solution:</h2>
+        <p id="solution">Please enter a healthcare problem to get a solution.</p>
+        
+        <h2>Doctors Near You:</h2>
+        <ul id="doctors">
+            <li>Doctors information will be displayed here.</li>
+        </ul>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+#css code
+
+body {  
+    font-family: Arial, sans-serif;  
+    background-color: #f4f4f4;  
+    margin: 0;  
+    padding: 20px;  
+}  
+
+.container {  
+    max-width: 600px;  
+    margin: auto;  
+    background: white;  
+    padding: 20px;  
+    border-radius: 5px;  
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
+}  
+
+h1, h2 {  
+    text-align: center;  
+}  
+
+form {  
+    display: flex;  
+    flex-direction: column;  
+}  
+
+input {  
+    margin: 10px 0;  
+    padding: 10px;  
+    border: 1px solid #ccc;  
+    border-radius: 5px;  
+}  
+
+button {  
+    padding: 10px;  
+    background-color: #28a745;  
+    color: white;  
+    border: none;  
+    border-radius: 5px;  
+    cursor: pointer;  
+}  
+
+button:hover {  
+    background-color: #218838;  
+}  
+
+ul {  
+    list-style-type: none;  
+    padding: 0;  
+}
+
+head{
+    background-image: url(image.jpeg);
+}
+#appointment{
+    background-image: url(health.jpg);
+    background-size: cover;
+}
+
+#javascript code
+
+const consultantForm = document.getElementById('consultantForm');  
+const consultantList = document.getElementById('consultantList');  
+
+
+consultantForm.addEventListener('submit', async (e) => {  
+    e.preventDefault();  
+    
+    const name = document.getElementById('name').value;  
+    const specialty = document.getElementById('specialty').value;  
+
+    // Register consultant  
+    const response = await fetch('http://localhost:5000/api/register', {  
+        method: 'POST',  
+        headers: {  
+            'Content-Type': 'application/json',  
+        },  
+        body: JSON.stringify({ name, specialty }),  
+    });  
+
+    if (response.ok) {  
+        alert('Consultant registered successfully!');  
+        loadConsultants();  
+        consultantForm.reset();  
+    } else {  
+        alert('Error registering consultant.');  
+    }  
+});  
+
+// Load consultants  
+async function loadConsultants() {  
+    const response = await fetch('http://localhost:5000/api/consultants');  
+    const consultants = await response.json();  
+    
+    consultantList.innerHTML = '';  
+    consultants.forEach(consultant => {  
+        const li = document.createElement('li');  
+        li.textContent = ${consultant.name} - ${consultant.specialty};  
+        consultantList.appendChild(li);  
+    });  
+}  
+
+// Initial load  
+loadConsultants();
